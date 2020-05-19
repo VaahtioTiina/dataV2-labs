@@ -12,19 +12,20 @@ The following function shows one way to solve the problem but the code is not id
 Refactor the code based on what you have learned about code simplicity and efficiency.
 """
 
-def my_function(X):
-    solutions = []
-    for x in range(5, X):
-        for y in range(4, X):
-            for z in range(3, X):
-                if (x*x==y*y+z*z):
-                    solutions.append([x, y, z])
-    m = 0
-    for solution in solutions:
-        if m < max(solution):
-            m = max(solution)
+def user_input():
+    inputs = 0
+    while inputs <= 5:
+        inputs = int(input("What is the maximal length of the triangle side? Enter a number: "))
+        if inputs <= 5:
+            print("Please enter a number greatar than 5")
+    return inputs
+
+
+def my_function():
+    x = user_input()
+    solutions = [x for x in range(5,x) for y in range(4, x) for z in range(3,x) if x*x==y*y+z*z ]
+    m = max(solutions)
     return m
 
-X = input("What is the maximal length of the triangle side? Enter a number: ")
 
-print("The longest side possible is " + str(my_function(int(X))))
+print("The longest side possible is ", my_function())

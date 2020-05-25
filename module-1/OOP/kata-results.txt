@@ -1,0 +1,36 @@
+# Challenge 1 - Remove all the marked elements from a list
+
+class List:
+    def remove_(self, integer_list, values_list):
+        #your code here
+        cleaned_list = [el for el in integer_list if el not in values_list]
+        return cleaned_list 
+
+
+
+# Challenge 2 - Counting total occurrences of specific digit 
+
+class List(object):
+    def count_spec_digits(self, integers_list, digits_list):
+        # your code here 
+        freq_list = []
+        for d in digits_list:    
+            count = 0
+            for el in integers_list: 
+                count_str = str(el).count(str(d))
+                count += count_str
+            freq_list.append((d, count))
+                
+        return freq_list 
+
+# Challenge 3 - Ordered count 
+
+def ordered_count(inp): 
+    c_list = []
+    count_list = []
+    for c in inp: 
+        if c not in c_list:
+            count = inp.count(c)
+            c_list.append(c)
+            count_list.append((c, count))
+    return count_list 

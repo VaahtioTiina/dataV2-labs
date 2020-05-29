@@ -56,6 +56,22 @@ H₀: “the conversion rate is the same for the two versions”
 H₁: “the conversion rate is higher for version B” 
 
 - First we divide the results to binary outcome of either converted or not converted 
+- After this we can start modeling the hypothesis0 
+
+"""  D represents a squared relative distance between the theoretical and the observed distributions.
+According to Pearson’s theorem, under H₀, D follows a χ² probability law with 1 degree of freedom (df)." 
+
+- After the modeling we like to check how likely the samples are under H₀ 
+"""
+It consists in computing the observed D and deriving its corresponding p-value according to the χ² law."""
+
+The p-value returned helps us determine whether the results are statistically significant. In this case, they were not, 
+however as mentioned in the Challenge 1, it is always good to understand and critize your tests. For example, instead the X2-test we could
+have performen the Z-test, that would have resulted with a statistically significant results. 
+
+Hence, it's always good to critically evaluate your results. 
+
+
 
 
 

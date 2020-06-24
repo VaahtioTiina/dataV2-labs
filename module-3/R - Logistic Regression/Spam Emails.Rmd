@@ -1,0 +1,98 @@
+---
+title: "Classification Model for Spam Emails"
+author: "Tiina Vaahtio"
+date: "6/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Project Introduction:
+In this project we want to build a predictive model to recognize spam email. 
+
+The dataset is from https://vincentarelbundock.github.io/Rdatasets/datasets.html and it contains 4601 emails from which 1813 were identified as spam. 
+
+
+## Data Preparation 
+
+Preview of the data:
+
+```{r echo=FALSE}
+spam <- read.csv("/cloud/project/spam7.csv")
+
+head(spam)
+
+```
+
+
+Summary Statistics: 
+
+```{r echo=FALSE}
+
+summary(spam)
+
+```
+
+Renaming and Transforming columns: 
+
+- Rename column name crl.tot 
+
+```{r}
+names(spam)[names(spam)=="crl.tot"]<-"lencap"
+```
+
+- Transform yesno column to 0, 1:
+```{r echo=FALSE}
+library(car)
+```
+
+
+```{r}
+spam$yesno<-recode(spam$yesno, "'y'=1; 'n'=0") 
+
+```
+## Build and Train Model 
+
+-Create training and test datasets 
+
+```{r echo=FALSE}
+library(caTools)
+```
+
+
+```{r}
+split<-sample.split(spam, SplitRatio = 0.8)
+train<-subset(spam, split=="TRUE")
+test<-subset(spam, split=="FALSE")
+```
+
+-Fit model 
+```{r}
+email_model<- glm(yesno ~ lencap+dollar+bang+money+n000+make, data = train, family= "binomial")
+
+summary(email_model)
+```
+- Create Predictions for Test Data
+```{r}
+res<-predict(email_model, test, type="response")
+
+```
+
+
+```{r echo=FALSE}
+confmatrix<-table(Actual_value=test$yesno, Predicted_value= res>0.5)
+confmatrix
+```
+
+- Accuracy Score
+```{r echo=FALSE}
+print((confmatrix[[1,1]]+confmatrix[[2,2]])/ sum(confmatrix))
+```
+-ROC plot
+```{r echo=FALSE}
+library(pROC)
+roc(test$yesno, res, plot=TRUE, legacy.axes=TRUE, percent=TRUE, xlab="False Positive Percentage", ylab="True Postive Percentage", col="#377eb8", lwd=4, print.auc=TRUE)
+```
+
